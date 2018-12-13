@@ -8,11 +8,11 @@ namespace Course.Controllers
 {
     public class PresintationController : Controller
     {
-        //[HttpGet]
-        //[Route("")]
-        //public IActionResult MainPage()       
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        [Route("")]
+        public IActionResult MainPage()
+        {
+            return View();
+        }
     }
 }
