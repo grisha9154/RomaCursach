@@ -12,9 +12,8 @@ namespace Course.Services
     {
         private ApplicationDbContext context;
 
-        private UserManager<IdentityUser> user;
 
-        /*public StoreService(ApplicationDbContext context)
+        public StoreService(ApplicationDbContext context)
         {
             this.context = context;
         }
@@ -26,8 +25,14 @@ namespace Course.Services
             corb.SpareId = order.Id;
             corb.DateOfCreate = DateTime.Now;
             corb.BuyerId = userId;
+            corb.IsActive = true;
+            corb.DateOfSale = null;
+            context.Add(corb);
+            context.SaveChanges();
+            return true;
+            
+        }
 
 
-        }*/
     }
 }

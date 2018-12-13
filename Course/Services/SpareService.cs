@@ -59,7 +59,16 @@ namespace Course.Services
 
         }
 
-        
+        public List<Spare> GetSpareByDescription(string like)
+        {
+            return context.Spares.Where(x => x.Description.Contains("%" + like + "%")).ToList();
+        }
+
+        public List<Spare> GetByType(int typeId)
+        {
+            return context.Spares.Where(x => x.TypeSpareId == typeId).ToList();
+
+        }
 
 
 

@@ -55,5 +55,19 @@ namespace Course.Controllers
         {
             return Ok(service.DeleteSpare(spareId));
         }
+
+        [HttpGet]
+        [Route("search/{like}")]
+        public IActionResult GetByDescription(string like)
+        {
+            return Ok(service.GetSpareByDescription(like));
+        }
+
+        [HttpGet]
+        [Route("searchh/{typeId}")]
+        public IActionResult GetSpareByType( int typeId)
+        {
+            return Ok(service.GetByType(typeId));
+        }
     }
 }

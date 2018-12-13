@@ -41,6 +41,7 @@ namespace Course
             services.AddTransient<ApplicationDbContext, ApplicationDbContext>();
             services.AddTransient<AdminServices, AdminServices>();
             services.AddTransient<SpareService, SpareService>();
+            services.AddTransient<StoreService, StoreService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
