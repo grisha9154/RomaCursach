@@ -33,6 +33,18 @@ namespace Course.Services
             
         }
 
+        //public List<Spare> GetCorbUsers(string userId)
+        //{
+        //    var query = from 
+
+        //    return context.Corbs.Where(c => context.Spares.Any(s => s.Id == c.SpareId) && c.BuyerId == userId).ToList();
+        //}
+
+        //public List<Spare> GetKorzina()
+        //{
+            
+        //}
+
 
     }
 }

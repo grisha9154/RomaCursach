@@ -63,9 +63,9 @@
     const getContainer = (article) => {
         const container = document.createElement('div');
         container.className = 'container';
-        const title = getTitle(article.NameSpare, article.Price);
+        const title = getTitle(article.nameSpare, article.price);
         container.appendChild(title);
-        const description = getDescription(article.Description);
+        const description = getDescription(article.description);
         container.appendChild(description);
         container.appendChild(getButon(article));
         return container;
@@ -101,17 +101,18 @@
 
     const getImg = (artile) => {
         const img = document.createElement('img');
-        img.src = artile.Photo;
-        img.alt = artile.NameSpare;
+        img.src = artile.photo;
+        img.alt = artile.nameSpare;
         img.style.width = '20%';
         img.style.height = '150px';
         return img;
     }
 
     const fetchSpareAndDraw = async () => {
-        const spares = await fetch("api/spares");
+        const query = await fetch("api/spares");
+        const spares = await query.json();
         const listOdPare = document.getElementById("lisOfPare");
-        for(let i = 0; i < 5; i++){
+        for (let i = 0; i < 5 && i < spares.length; i++){
             listOdPare.appendChild(getCard(spares[i]));
         }
     }

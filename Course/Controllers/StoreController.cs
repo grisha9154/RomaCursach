@@ -25,11 +25,13 @@ namespace Course.Controllers
 
         [HttpPost]
         [Route("/api/store")]
-        public IActionResult Buy([FromBody] Article article)
+        public IActionResult ToOrder([FromBody] Article article)
         {
             var currentUser = user.FindByNameAsync(User.Identity.Name);
-            return Ok(service.ToOrder(article.article, currentUser.Id.ToString()));
+            return Ok(service.ToOrder(article.article, currentUser.Result.Id));
         }
+
+
 
 
     }
