@@ -16,8 +16,6 @@ namespace Course.Controllers
         private SpareService service;
         public SpareController(SpareService service)
         {
-
-
             this.service = service;
         }
 
