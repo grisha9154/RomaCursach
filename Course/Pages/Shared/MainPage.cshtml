@@ -37,14 +37,23 @@
     }
 
 </style>
+<script>
+    async function handlerOnClick() {
+        const article = document.getElementById(articleInput).value;
+        const query = await fetch(`api/spares${article}`);
+        const spares = await query.json();
+        document.getElementById("lisOfPare");
+        drawSpare(spares);
+    }
+</script>
 
 <div class="grid-container">
     <div class="item2">
-        Poisk Menu
+        <input id="articleInput"  type="text" />
+        <button onclick="handlerOnClick">
     </div>
     <div class="item3">
         <ul id="lisOfPare">
-
         </ul>
     </div>
 </div>
@@ -108,13 +117,22 @@
         return img;
     }
 
-    const fetchSpareAndDraw = async () => {
-        const spares = await fetch("api/spares");
+    const fetchSpare = async () => {
+       return fetch("api/spares").then((x) => x.json() );
+    }
+
+    function drawSpare (spares) {
         const listOdPare = document.getElementById("lisOfPare");
         for(let i = 0; i < 5; i++){
             listOdPare.appendChild(getCard(spares[i]));
         }
     }
+
+    const fetchSpareAndDraw = async () => {
+        const spares = await fetchSpare();
+        drawSpare(spares);
+    }
+
 
     fetchSpareAndDraw();
 
