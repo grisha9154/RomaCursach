@@ -39,12 +39,12 @@
 </style>
 
 <div class="grid-container">
-    <div class="item2">
-        Poisk Menu
+    <div class="item2" id="searchDiv">
+        <label>Артикль</label>
+        <input id="articleInput"  type="text" />
     </div>
     <div class="item3">
         <ul id="lisOfPare">
-
         </ul>
     </div>
 </div>
@@ -108,15 +108,38 @@
         return img;
     }
 
-    const fetchSpareAndDraw = async () => {
-        const query = await fetch("api/spares");
-        const spares = await query.json();
+    const fetchSpare = async () => {
+       return fetch("api/spares").then((x) => x.json() );
+    }
+
+    function drawSpare (spares) {
         const listOdPare = document.getElementById("lisOfPare");
         for (let i = 0; i < 5 && i < spares.length; i++){
             listOdPare.appendChild(getCard(spares[i]));
         }
     }
 
+    const fetchSpareAndDraw = async () => {
+        const spares = await fetchSpare();
+        drawSpare(spares);
+    }
+
+
     fetchSpareAndDraw();
 
+</script>
+
+<script>    
+    async function handlerOnClick() {
+        const article = document.getElementById("articleInput").value;
+        const query = await fetch(`api/spares/${article}`);
+        const spares = await query.json();
+        document.getElementById("lisOfPare").innerHTML = "";
+        drawSpare(spares);
+    }
+
+    const button = document.createElement("button");
+    button.onclick = handlerOnClick;
+    button.append(document.createTextNode("Найти"));
+    document.getElementById("searchDiv").appendChild(button);
 </script>
