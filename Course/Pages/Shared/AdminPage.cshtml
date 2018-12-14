@@ -1,0 +1,67 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    .contMenu {
+        margin-top: 3%;
+        display: flex;
+        min-height: 550px;
+    }
+</style>
+
+
+<div class="contMenu"> 
+    <div>
+        <button id="createManager" style="margin: 5px">Создать Мэнаджера</button><br />
+        <button id="showManager" style="margin: 5px">Просмотр пользователей</button>
+    </div>
+    <div style="margin-left: 20%">
+        <div id="createManagerForm" >
+            <form>
+                <label>Email</label>
+                <input id="email" style="margin-left:30px " /> <br />
+                <label>Password</label>
+                <input id="password" style="margin-left:2px " /> <br />
+                <button id ="createButton" >Создать</button>
+            </form>
+        </div>
+        <div id="showAllUserForm" style="display: none" >
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    const showCreateManagerForm = () => {
+        document.getElementById("createManagerForm").style.display = "inline";
+        document.getElementById("showAllUserForm").style.display = "none";
+
+    }
+
+    const showAllUser = () => {
+        document.getElementById("createManagerForm").style.display = "none";
+        document.getElementById("showAllUserForm").style.display = 'inline';
+    }
+
+    const createManager = (e) => {
+        e.preventDefault();
+        const form = {
+            Email: document.getElementById("email").value,
+            Password: document.getElementById("password").value,
+        };
+
+        const config = {
+              method: "POST",
+              headers: { "Content-Type": "application/json"},
+              body: JSON.stringify(form),
+        };
+
+        fetch("api/admin/create", config).then(() => alert("Мэнаджер создан"));
+    }
+
+    document.getElementById("createManager").onclick = showCreateManagerForm;
+    document.getElementById("showManager").onclick = showAllUser;
+    document.getElementById("createButton").onclick = createManager;
+</script>
