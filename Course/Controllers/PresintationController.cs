@@ -30,7 +30,15 @@ namespace Course.Controllers
         {
             return View();
         }
-        
+
+        [HttpGet]
+        [Route("CreateSpare")]
+        public IActionResult CreateSpare()
+        {
+            return View();
+        }
+
+
 
 
     }

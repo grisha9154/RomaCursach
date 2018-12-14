@@ -37,7 +37,8 @@ namespace Course.Controllers
         [Route("")]
         public IActionResult CreateSpare([FromBody]Spare spare)
         {
-            return Ok(service.CreateSpare(spare));
+            service.CreateSpare(spare);
+            return Redirect(HttpContext.Request.Host.ToString());
         }
 
         [HttpPut]

@@ -14,21 +14,21 @@
 
 <div class="contMenu"> 
     <div>
-        <button id="createManager" style="margin: 5px">Создать Мэнаджера</button><br />
-        <button id="showManager" style="margin: 5px">Просмотр пользователей</button>
+        <button id="createManager" style="margin: 5px">Create Manager</button><br />
+        <button id="showManager" style="margin: 5px">All Users</button>
     </div>
     <div style="margin-left: 20%">
         <div id="createManagerForm" >
+            <H2> Create Manager</H2>
             <form>
                 <label>Email</label>
                 <input id="email" style="margin-left:30px " /> <br />
                 <label>Password</label>
                 <input id="password" style="margin-left:2px " /> <br />
-                <button id ="createButton" >Создать</button>
+                <button id ="createButton" >Create</button>
             </form>
         </div>
         <div id="showAllUserForm" style="display: none" >
-            
         </div>
     </div>
 </div>
@@ -40,13 +40,58 @@
 
     }
 
-    const showAllUser = () => {
+    const fetchAllUser = () => {
+        return fetch("api/admin/users").then(x => x.json());
+    }
+
+    const getRow = (user) => {
+        const divEmail = document.createElement("div");
+        divEmail.appendChild(document.createTextNode(user.email))
+        divEmail.style.marginRight = "5px";
+        divEmail.style.width = "200px"
+        const removeLink = document.createElement("button");
+        removeLink.appendChild(document.createTextNode("Delete"))
+        removeLink.onclick= (e) => {
+            e.preventDefault();
+            const form = {
+                userId: user.id,
+            };
+            const config = {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json"},
+                  body: JSON.stringify(form),
+            };
+            fetch("api/admin/delete", config);
+        }
+        const br = document.createElement("br");
+        const div = document.createElement("div");
+        div.appendChild(divEmail);
+        div.appendChild(removeLink);
+        div.appendChild(br);
+        div.style.display = "flex";
+        div.style.marginTop = "5px";
+        return div;
+    }
+    
+    const drawUser = (allUser) => {
+        const list = document.getElementById("showAllUserForm");
+        list.innerHTML = '<h2> User list</h2>';
+        allUser.forEach((user) => {
+            list.appendChild(getRow(user));
+        });
+    }
+
+    const showAllUser = async () => {
         document.getElementById("createManagerForm").style.display = "none";
         document.getElementById("showAllUserForm").style.display = 'inline';
+        
+        const allUser = await fetchAllUser();
+        drawUser(allUser);
     }
 
     const createManager = (e) => {
         e.preventDefault();
+        
         const form = {
             Email: document.getElementById("email").value,
             Password: document.getElementById("password").value,
@@ -58,7 +103,7 @@
               body: JSON.stringify(form),
         };
 
-        fetch("api/admin/create", config).then(() => alert("Мэнаджер создан"));
+        fetch("api/admin/create", config).then(() => alert("Add new Manager"));
     }
 
     document.getElementById("createManager").onclick = showCreateManagerForm;

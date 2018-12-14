@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Course.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace Course.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("/api/store")]
         public IActionResult ToOrder([FromBody] Article article)
         {
@@ -47,7 +49,7 @@ namespace Course.Controllers
             return Ok(service.DeleteInCorb(spareId.spareId));
         }
 
-        [HttpPut]
+        [HttpGet]
         [Route("/api/corb/buy")]
         public IActionResult Buy()
         {

@@ -28,24 +28,33 @@
         margin: 5px
     }
 
-    .card:hover {
+        .card:hover {
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    }
+        }
 
     .container {
         padding: 2px 16px;
     }
-
 </style>
+
+@if (User.IsInRole("manager"))
+{
+    <a href="CreateSpare"> Create Spare </a>
+}
+
+@if (User.IsInRole("admin"))
+{
+    <a href="admin">Admin panel </a>
+}
+
 
 <div class="grid-container">
     <div class="item2" id="searchDiv">
-        <label>Артикль</label>
-        <input id="articleInput"  type="text" />
+        <label>Article</label>
+        <input id="articleInput" type="text" />
     </div>
     <div class="item3">
-        <ul id="lisOfPare">
-        </ul>
+        <ul id="lisOfPare"></ul>
     </div>
 </div>
 
@@ -75,9 +84,19 @@
         const button = document.createElement('button');
         button.onclick = (e) => {
             e.preventDefault();
-            fetch("");
+
+            const form = {
+                article: spare.article,
+            };
+
+            const config = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(form),
+            };
+            fetch("/api/store", config);
         }
-        button.appendChild(document.createTextNode("Заказать"))
+        button.appendChild(document.createTextNode("Order"))
         return button;
     }
 
@@ -85,7 +104,7 @@
         const h4 = document.createElement('h4');
         const b = document.createElement('b');
         const text = document.createTextNode(title);
-        const priceText = document.createTextNode(" " + price+ " руб. ");
+        const priceText = document.createTextNode(" " + price + " USD ");
         b.appendChild(text);
         h4.appendChild(b);
         h4.appendChild(priceText);
@@ -109,12 +128,12 @@
     }
 
     const fetchSpare = async () => {
-       return fetch("api/spares").then((x) => x.json() );
+        return fetch("api/spares").then((x) => x.json());
     }
 
-    function drawSpare (spares) {
+    function drawSpare(spares) {
         const listOdPare = document.getElementById("lisOfPare");
-        for (let i = 0; i < 5 && i < spares.length; i++){
+        for (let i = 0; i < 5 && i < spares.length; i++) {
             listOdPare.appendChild(getCard(spares[i]));
         }
     }
@@ -129,7 +148,7 @@
 
 </script>
 
-<script>    
+<script>
     async function handlerOnClick() {
         const article = document.getElementById("articleInput").value;
         const query = await fetch(`api/spares/${article}`);
@@ -140,6 +159,6 @@
 
     const button = document.createElement("button");
     button.onclick = handlerOnClick;
-    button.append(document.createTextNode("Найти"));
+    button.append(document.createTextNode("Find"));
     document.getElementById("searchDiv").appendChild(button);
 </script>

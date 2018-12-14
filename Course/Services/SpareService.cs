@@ -19,7 +19,7 @@ namespace Course.Services
 
         public List<Spare> GetAllSpares()
         {
-            return context.Spares.Where(x=>x.IsDelete!=true).ToList();
+            return context.Spares.Where(x=> !context.Corbs.Any(c => c.SpareId == x.Id) && x.IsDelete!=true).ToList();
         }
 
         public List<Spare> GetSpareByArticle(int article)

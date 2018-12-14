@@ -18,19 +18,19 @@
     
     <div style="margin-left: 20%">
         <div id="createSpareForm">
-            <h2>Создание запчасти</h2>
+            <h2>Create Spare</h2>
             <form>
-                <label>Название запчасти</label>
-                <input id="NameSpare" style="margin-left:30px " /> <br />
-                <label>Артикл</label>
-                <input id="Article" style="margin-left:2px " /> <br />
-                <label>Цена</label>
-                <input id="Price" style="margin-left:30px " /> <br />
-                <label>Описание запчасти</label>
-                <input id="Description" style="margin-left:60px " /> <br />
-                <label>Ссылка на картинку</label>
-                <input id="Photo" style="margin-left:30px " /> <br />
-                <button id="createButton">Создать</button>
+                <label style="width: 200px" >Spare Name</label>
+                <input id="NameSpare"/> <br />
+                <label style="width: 200px">Article</label>
+                <input id="Article" /> <br />
+                <label style="width: 200px">Price</label>
+                <input id="Price" /> <br />
+                <label style="width: 200px">Description</label>
+                <input id="Description"/> <br />
+                <label style="width: 200px">Photo Url</label>
+                <input id="Photo" /> <br />
+                <button id="createButton">Create</button>
             </form>
         </div>
         <div id="showAllUserForm" style="display: none">
@@ -38,3 +38,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("createButton").onclick = (e) => {
+        e.preventDefault();
+        const form = {
+              NameSpare: document.getElementById("NameSpare").value,
+              Article: document.getElementById("Article").value,
+              Price: document.getElementById("Price").value,
+              Description: document.getElementById("Description").value,
+              Photo: document.getElementById("Photo").value,
+              TypeSpareId: 1,
+          };
+        const config = {
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify(form),
+          };
+          fetch("api/spares", config);
+    }
+
+</script>

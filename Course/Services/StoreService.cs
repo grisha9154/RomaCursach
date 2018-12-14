@@ -42,7 +42,7 @@ namespace Course.Services
         public List<Spare> GetKorzina(string userId)
         {
             SqlParameter param = new SqlParameter("userId", userId);
-            var spares = context.Spares.FromSql("select Spares.* from Spares left join Corbs on Spares.Id = Corbs.SpareId Where Corbs.BuyerId = @userId", param).ToList();
+            var spares = context.Spares.FromSql("select Spares.* from Spares left join Corbs on Spares.Id = Corbs.SpareId Where Corbs.BuyerId = @userId and DateOfSale is null", param).ToList();
             return spares;
         }
 
