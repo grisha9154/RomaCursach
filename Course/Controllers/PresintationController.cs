@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,14 @@ namespace Course.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        [Route("admin")]
+        [Authorize(Roles = "admin")]
+        public IActionResult AdminPage()
+        {
+            return View();
+        }
+
     }
 }

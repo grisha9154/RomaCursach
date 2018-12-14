@@ -2,9 +2,16 @@
 using Course.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Course.Controllers.AdminControllers
 {
+    public class CreateManagerModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
     [ApiController]
     public class AdminController : ControllerBase
     {
@@ -19,15 +26,16 @@ namespace Course.Controllers.AdminControllers
         [Authorize(Roles = "admin")]
         public IActionResult GetUsers()
         {
-             
             return Ok(adminServices.GetAllUsers());
         }
 
-        [HttpGet("api/admin/orders")]
-        [Authorize(Roles ="admin")]
-        public IActionResult GetOrders()
+        [HttpPost("api/admin/create")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> CreateManager([FromBody] CreateManagerModel model)
         {
-            return Ok(adminServices.GetOrders());
+            await adminServices.CreateManager(model);
+            return Ok();
         }
+
     }
 }
