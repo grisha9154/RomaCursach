@@ -31,7 +31,29 @@ namespace Course.Controllers
             return Ok(service.ToOrder(article.article, currentUser.Result.Id));
         }
 
+        [HttpGet]
+        [Route("/api/corb")]
+        public IActionResult GetCorbUser()
+        {
+            var currentUser = user.FindByNameAsync(User.Identity.Name);
+            return Ok(service.GetKorzina(currentUser.Result.Id));
 
+        }
+
+        [HttpPost]
+        [Route("/api/corb/delete")]
+        public IActionResult DeleteInCorbs([FromBody]SpareId spareId)
+        {
+            return Ok(service.DeleteInCorb(spareId.spareId));
+        }
+
+        [HttpPut]
+        [Route("/api/corb/buy")]
+        public IActionResult Buy()
+        {
+            var currentUser = user.FindByNameAsync(User.Identity.Name);
+            return Ok(service.Buy(currentUser.Result.Id));
+        }
 
 
     }

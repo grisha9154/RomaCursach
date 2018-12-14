@@ -37,5 +37,11 @@ namespace Course.Controllers.AdminControllers
             return Ok();
         }
 
+        [HttpPost("api/admin/delete")]
+        [Authorize(Roles ="admin")]
+        public IActionResult DeleteUsers([FromBody] UserId userId)
+        {
+            return Ok(adminServices.DropUser(userId.userId));
+        }
     }
 }

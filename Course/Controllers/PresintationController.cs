@@ -24,5 +24,14 @@ namespace Course.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("store")]
+        public IActionResult Store()
+        {
+            return View();
+        }
+        
+
+
     }
 }

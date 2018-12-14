@@ -3,8 +3,10 @@ using Course.Data;
 using Course.Modeles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,7 +21,7 @@ namespace Course.Services
         public AdminServices(ApplicationDbContext context, UserManager<IdentityUser> manager)
         {
             this.context = context;
-            this.manager = manager;
+           this.manager = manager;
 
         }
 
@@ -36,6 +38,12 @@ namespace Course.Services
             {
                 await manager.AddToRoleAsync(user, "manager");
             }
+        }
+
+        public bool DropUser(string userId )
+        {
+            var res = context.Database.ExecuteSqlCommand("Delete from AspNetUsers where Id = {0}", userId);
+            return true;
         }
     }
 }
